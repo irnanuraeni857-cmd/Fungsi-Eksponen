@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Pembelajaran Interaktif: Fungsi Eksponen</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for Interactive Function Plotting -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome for UI Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- MathJax for rendering LaTeX mathematical equations -->
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .tab-btn.active {
+            background-color: #4f46e5;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+        }
+
+        .custom-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4f46e5;
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(79, 70, 229, 0.5);
+            transition: all 0.2s ease;
+        }
+
+        .custom-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50">
+
+    <!-- Header / Navigation -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo & Title -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-md">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg font-bold text-slate-800 leading-tight">Eksplorasi Fungsi Eksponen</h1>
+                        <p class="text-xs text-indigo-600 font-semibold">Media Pembelajaran Interaktif & Modul Kontekstual</p>
+                    </div>
+                </div>
+
+                <!-- Deep Learning Badge -->
+                <div class="hidden md:flex items-center gap-2 bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs px-3 py-1.5 rounded-full font-medium">
+                    <i class="fa-solid fa-brain text-indigo-600"></i>
+                    <span>Pendekatan Pembelajaran Mendalam (Deep Learning)</span>
+                </div>
+            </div>
+
+            <!-- Tab Navigation Buttons -->
+            <div class="flex overflow-x-auto space-x-2 py-2 no-scrollbar border-t border-slate-100">
+                <button onclick="switchTab('konsep')" id="tab-konsep" class="tab-btn active px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-2">
+                    <i class="fa-solid fa-book-open"></i> 1. Eksplorasi Konsep & Grafik
+                </button>
+                <button onclick="switchTab('kontekstual')" id="tab-kontekstual" class="tab-btn px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-all duration-200 text-slate-600 hover:bg-slate-100 flex items-center gap-2">
+                    <i class="fa-solid fa-earth-americas"></i> 2. Simulasi Kontekstual
+                </button>
+                <button onclick="switchTab('komparasi')" id="tab-komparasi" class="tab-btn px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-all duration-200 text-slate-600 hover:bg-slate-100 flex items-center gap-2">
+                    <i class="fa-solid fa-scale-balanced"></i> 3. Linear vs Eksponensial
+                </button>
+                <button onclick="switchTab('evaluasi')" id="tab-evaluasi" class="tab-btn px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-all duration-200 text-slate-600 hover:bg-slate-100 flex items-center gap-2">
+                    <i class="fa-solid fa-pen-ruler"></i> 4. Kuis & Tantangan Soal
+                </button>
+                <button onclick="switchTab('refleksi')" id="tab-refleksi" class="tab-btn px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-all duration-200 text-slate-600 hover:bg-slate-100 flex items-center gap-2">
+                    <i class="fa-solid fa-lightbulb"></i> 5. Refleksi & Catatan
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- TAB 1: EKSPLORASI KONSEP & GRAFIK -->
+        <section id="content-konsep" class="tab-content space-y-6">
+            <!-- Learning Goals Box -->
+            <div class="bg-gradient-to-r from-indigo-600 to-violet-600 rounded-2xl p-6 text-white shadow-lg">
+                <div class="flex items-start gap-4">
+                    <div class="p-3 bg-white/10 rounded-xl">
+                        <i class="fa-solid fa-bullseye text-2xl text-amber-300"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold mb-1">Tujuan Pembelajaran (Deep Learning)</h2>
+                        <p class="text-sm text-indigo-100 leading-relaxed">
+                            Siswa dapat menganalisis karakteristik fungsi eksponen $f(x) = a \cdot b^{x-c} + d$, mengidentifikasi pengaruh perubahan parameter terhadap bentuk grafik, serta memahami landasan konsep pertumbuhan dan peluruhan eksponensial.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Interactive Canvas & Controls -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Control Panel -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5">
+                    <h3 class="font-bold text-slate-800 text-lg flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-indigo-600"></i> Transformasi Parameter
+                    </h3>
+
+                    <div class="p-4 bg-indigo-50/70 border border-indigo-100 rounded-xl text-center">
+                        <p class="text-xs text-slate-500 uppercase font-semibold tracking-wider mb-1">Bentuk Umum Fungsi</p>
+                        <p class="text-lg font-bold text-indigo-900" id="current-equation-display">
+                            $f(x) = 1 \cdot (2)^x + 0$
+                        </p>
+                    </div>
+
+                    <!-- Parameter Sliders -->
+                    <div class="space-y-4">
+                        <!-- Parameter a -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                                <span>Nilai Awal ($a$): <span id="val-a" class="text-indigo-600">1</span></span>
+                                <span class="text-slate-400">Skala vertikal</span>
+                            </div>
+                            <input type="range" id="slider-a" min="-5" max="5" step="0.5" value="1" class="w-full custom-slider bg-slate-200 h-2 rounded-lg appearance-none cursor-pointer" oninput="updateGraph()">
+                        </div>
+
+                        <!-- Parameter b (Basis) -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                                <span>Basis / Factor ($b$): <span id="val-b" class="text-indigo-600">2</span></span>
+                                <span id="b-type-badge" class="text-emerald-600 font-bold">Pertumbuhan ($b>1$)</span>
+                            </div>
+                            <input type="range" id="slider-b" min="0.1" max="5" step="0.1" value="2" class="w-full custom-slider bg-slate-200 h-2 rounded-lg appearance-none cursor-pointer" oninput="updateGraph()">
+                        </div>
+
+                        <!-- Parameter c (Pergeseran Horisontal) -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                                <span>Geser Horizontal ($c$): <span id="val-c" class="text-indigo-600">0</span></span>
+                                <span class="text-slate-400">Kanan / Kiri</span>
+                            </div>
+                            <input type="range" id="slider-c" min="-5" max="5" step="0.5" value="0" class="w-full custom-slider bg-slate-200 h-2 rounded-lg appearance-none cursor-pointer" oninput="updateGraph()">
+                        </div>
+
+                        <!-- Parameter d (Asimtot Datar) -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                                <span>Geser Vertikal / Asimtot ($d$): <span id="val-d" class="text-indigo-600">0</span></span>
+                                <span class="text-slate-400">Atas / Bawah</span>
+                            </div>
+                            <input type="range" id="slider-d" min="-5" max="5" step="0.5" value="0" class="w-full custom-slider bg-slate-200 h-2 rounded-lg appearance-none cursor-pointer" oninput="updateGraph()">
+                        </div>
+                    </div>
+
+                    <!-- Key Insights Card -->
+                    <div class="p-4 bg-amber-50 border border-amber-200 rounded-xl text-xs space-y-2">
+                        <p class="font-bold text-amber-900 flex items-center gap-1.5">
+                            <i class="fa-solid fa-lightbulb text-amber-600"></i> Observasi Penting:
+                        </p>
+                        <ul class="list-disc list-inside text-amber-800 space-y-1 pl-1">
+                            <li>Garis putus-putus merah merepresentasikan **Asimtot Datar** $y = d$.</li>
+                            <li>Jika basis $b > 1$, grafik **naik pesat** (Pertumbuhan).</li>
+                            <li>Jika $0 < b < 1$, grafik **turun mendekati asimtot** (Peluruhan).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Interactive Graph Area -->
+                <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-slate-800 text-lg flex items-center gap-2">
+                            <i class="fa-solid fa-chart-area text-indigo-600"></i> Visualisasi Kurva Real-Time
+                        </h3>
+                        <button onclick="resetGraphParams()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg transition-colors font-medium">
+                            <i class="fa-solid fa-rotate-left mr-1"></i> Reset Grafik
+                        </button>
+                    </div>
+
+                    <div class="relative flex-grow min-h-[360px] w-full">
+                        <canvas id="conceptChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: SIMULASI KONTEKSTUAL DUNIA NYATA -->
+        <section id="content-kontekstual" class="tab-content hidden space-y-6">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <h2 class="text-2xl font-bold text-slate-800">Aplikasi Eksponen dalam Dunia Nyata</h2>
+                <p class="text-sm text-slate-600">
+                    Fungsi eksponen tidak hanya teori matematis, tetapi digunakan untuk memodelkan fenomena biologi, finansial, medis, dan sains.
+                </p>
+            </div>
+
+            <!-- Simulation Selector Tabs -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Card 1: Biologi / Virus -->
+                <button onclick="selectSimContext('virus')" id="btn-sim-virus" class="p-5 rounded-2xl bg-white border-2 border-indigo-600 text-left shadow-sm hover:shadow-md transition-all">
+                    <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center font-bold text-lg mb-3">
+                        <i class="fa-solid fa-virus"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-800">1. Pertumbuhan Bakteri / Virus</h4>
+                    <p class="text-xs text-slate-500 mt-1">Model pembelahan sel biner dan penyebaran epidemi penyakit.</p>
+                </button>
+
+                <!-- Card 2: Keuangan -->
+                <button onclick="selectSimContext('keuangan')" id="btn-sim-keuangan" class="p-5 rounded-2xl bg-white border border-slate-200 text-left shadow-sm hover:shadow-md transition-all">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-lg mb-3">
+                        <i class="fa-solid fa-coins"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-800">2. Bunga Majemuk & Investasi</h4>
+                    <p class="text-xs text-slate-500 mt-1">Perhitungan pertumbuhan modal investasi jangka panjang.</p>
+                </button>
+
+                <!-- Card 3: Fisika / Obat -->
+                <button onclick="selectSimContext('obat')" id="btn-sim-obat" class="p-5 rounded-2xl bg-white border border-slate-200 text-left shadow-sm hover:shadow-md transition-all">
+                    <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-lg mb-3">
+                        <i class="fa-solid fa-capsules"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-800">3. Peluruhan Dosis Obat / Radioaktif</h4>
+                    <p class="text-xs text-slate-500 mt-1">Metabolisme obat dalam darah berdasarkan waktu paruh.</p>
+                </button>
+            </div>
+
+            <!-- Dynamic Simulation Sandbox Area -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Controls for Current Selected Simulation -->
+                <div class="space-y-5">
+                    <div class="border-b border-slate-100 pb-3">
+                        <span id="sim-category-badge" class="px-2.5 py-1 bg-rose-100 text-rose-700 text-xs font-bold rounded-full">Skenario Biologi</span>
+                        <h3 id="sim-title" class="text-lg font-bold text-slate-800 mt-2">Pertumbuhan Populasi Bakteri</h3>
+                    </div>
+
+                    <div id="sim-inputs-container" class="space-y-4">
+                        <!-- Dynamic Sliders inserted by JS -->
+                    </div>
+
+                    <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+                        <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Persamaan Matematika</p>
+                        <p id="sim-formula" class="text-sm font-bold text-slate-800">
+                            $N(t) = N_0 \times 2^t$
+                        </p>
+                        <p id="sim-explanation" class="text-xs text-slate-600">
+                            Jumlah bakteri berlipat ganda setiap satuan waktu interval $t$.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Simulation Result Chart -->
+                <div class="lg:col-span-2 flex flex-col">
+                    <div class="flex justify-between items-center mb-3">
+                        <h4 class="font-bold text-slate-800 text-sm">Grafik Simulasi Kontekstual</h4>
+                        <div id="sim-stat-box" class="text-xs font-bold bg-indigo-50 text-indigo-700 px-3 py-1 rounded-lg">
+                            Total Akhir: <span id="sim-result-value">0</span>
+                        </div>
+                    </div>
+                    <div class="relative flex-grow min-h-[320px]">
+                        <canvas id="simChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: PERBANDINGAN LINEAR VS EKSPONENSIAL -->
+        <section id="content-komparasi" class="tab-content hidden space-y-6">
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-6">
+                <div class="flex items-start gap-4">
+                    <div class="p-3 bg-amber-500 text-white rounded-xl text-xl">
+                        <i class="fa-solid fa-code-compare"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-amber-900 mb-1">Deep Learning Insight: "Mengapa Eksponen Begitu Dahsyat?"</h3>
+                        <p class="text-sm text-amber-800 leading-relaxed">
+                            Fungsi **Linear** bertambah secara konstan (penjumlahan konstan), sedangkan Fungsi **Eksponensial** bertambah secara multiplikatif (perkalian berulang). Dalam jangka panjang, pertumbuhan eksponensial **selalu melampaui** pertumbuhan linear.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparison Simulator -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5">
+                    <h3 class="font-bold text-slate-800 text-base">Parameter Kasus Studi: Menabung vs Investasi</h3>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Modal Awal ($M_0$): Rp <span id="comp-val-m0">1.000.000</span></label>
+                            <input type="range" id="comp-m0" min="500000" max="5000000" step="500000" value="1000000" class="w-full custom-slider bg-slate-200 h-2 rounded-lg appearance-none" oninput="updateComparison()">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Pertambahan Linear (Tabungan Tetap / thn): Rp <span id="comp-val-add">200.000</span></label>
+                            <input type="range" id="comp-add" min="50000" max="1000000" step="50000" value="200000" class="w-full custom-slider bg-slate-200 h-2 rounded-lg appearance-none" oninput="updateComparison()">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Suku Bunga Eksponensial (% / thn): <span id="comp-val-rate">15</span>%</label>
+                            <input type="range" id="comp-rate" min="5" max="30" step="1" value="15" class="w-full custom-slider bg-slate-200 h-2 rounded-lg appearance-none" oninput="updateComparison()">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Durasi Waktu ($t$ thn): <span id="comp-val-years">15</span> Tahun</label>
+                            <input type="range" id="comp-years" min="5" max="30" step="1" value="15" class="w-full custom-slider bg-slate-200 h-2 rounded-lg appearance-none" oninput="updateComparison()">
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-indigo-50 border border-indigo-100 rounded-xl space-y-2 text-xs">
+                        <div class="flex justify-between items-center text-slate-700">
+                            <span>Hasil Linear ($t$ thn):</span>
+                            <span id="res-linear" class="font-bold text-blue-600">Rp 0</span>
+                        </div>
+                        <div class="flex justify-between items-center text-slate-700">
+                            <span>Hasil Eksponensial ($t$ thn):</span>
+                            <span id="res-expo" class="font-bold text-emerald-600">Rp 0</span>
+                        </div>
+                        <div class="pt-2 border-t border-indigo-200 font-bold text-indigo-900 flex justify-between">
+                            <span>Selisih Keuntungan:</span>
+                            <span id="res-diff" class="text-indigo-600">Rp 0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comparison Chart -->
+                <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col">
+                    <h3 class="font-bold text-slate-800 text-base mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-line text-indigo-600"></i> Perbandingan Kurva Pertumbuhan
+                    </h3>
+                    <div class="relative flex-grow min-h-[340px]">
+                        <canvas id="compChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: KUIS & EVALUASI KONTEKSTUAL -->
+        <section id="content-evaluasi" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800">Tantangan Soal Kontekstual & Penalaran</h2>
+                    <p class="text-xs text-slate-500 mt-1">Uji pemahaman mendalam Anda mengenai pengaplikasian fungsi eksponen dalam kehidupan nyata.</p>
+                </div>
+                <div class="flex items-center gap-4 bg-slate-100 px-4 py-2 rounded-xl">
+                    <div class="text-center">
+                        <p class="text-[10px] uppercase font-bold text-slate-400">Skor Anda</p>
+                        <p id="quiz-score" class="text-xl font-extrabold text-indigo-600">0</p>
+                    </div>
+                    <div class="h-8 w-px bg-slate-300"></div>
+                    <div class="text-center">
+                        <p class="text-[10px] uppercase font-bold text-slate-400">Progres</p>
+                        <p id="quiz-progress" class="text-xs font-bold text-slate-700">Soal 1 / 4</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Questions Container -->
+            <div id="quiz-container" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+                <!-- Question item dynamically loaded by JavaScript -->
+            </div>
+        </section>
+
+        <!-- TAB 5: REFLEKSI & CATATAN SISWA -->
+        <section id="content-refleksi" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+                <div class="border-b border-slate-100 pb-4">
+                    <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                        <i class="fa-solid fa-journal-whills text-indigo-600"></i> Jurnal Refleksi Metakognisi (Deep Learning)
+                    </h2>
+                    <p class="text-xs text-slate-500 mt-1">
+                        Refleksi membantu Anda mengkonsolidasikan konsep dari ingatan jangka pendek ke pemahaman jangka panjang.
+                    </p>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-2">
+                            1. Apa perbedaan mendasar antara pertumbuhan linear dan pertumbuhan eksponensial menurut pemahaman Anda?
+                        </label>
+                        <textarea id="ref-q1" rows="3" class="w-full p-3 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="Tuliskan jawaban Anda di sini..."></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-2">
+                            2. Berikan contoh satu fenomena lain di sekitarmu (selain yang diujikan) yang menggunakan prinsip peluruhan atau pertumbuhan eksponen!
+                        </label>
+                        <textarea id="ref-q2" rows="3" class="w-full p-3 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="Tuliskan contoh fenomena di sekitar Anda..."></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-2">
+                            3. Bagaimana perubahan nilai basis ($b$) mempengaruhi kecepatan perubahan grafik fungsi eksponen?
+                        </label>
+                        <textarea id="ref-q3" rows="3" class="w-full p-3 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="Jelaskan hubungan nilai basis dengan kelajuan kurva..."></textarea>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center pt-4 border-t border-slate-100">
+                    <button onclick="saveReflectionNotes()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-5 py-2.5 rounded-xl text-xs transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-floppy-disk"></i> Simpan & Salin Jurnal Refleksi
+                    </button>
+                    <span id="save-status-msg" class="text-xs text-emerald-600 font-semibold hidden">
+                        <i class="fa-solid fa-circle-check"></i> Refleksi berhasil disimpan!
+                    </span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-4 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
+            &copy; 2026 Media Pembelajaran Matematika Interaktif — Modul Fungsi Eksponen Berbasis Deep Learning.
+        </div>
+    </footer>
+
+    <script>
+        /* Global variables for charts */
+        let conceptChartInstance = null;
+        let simChartInstance = null;
+        let compChartInstance = null;
+
+        /* Current simulation type */
+        let currentSimType = 'virus';
+
+        /* Quiz data with contextual questions */
+        const quizQuestions = [
+            {
+                id: 1,
+                context: "Biologi & Epidemiologi",
+                question: "Sebuah varian virus influenza menyebar di suatu kota. Jumlah orang yang terinfeksi pada t hari pertama dimodelkan dengan fungsi $f(t) = 50 \cdot (2)^{0.5t}$. Berapa jumlah perkiraan orang yang terinfeksi setelah 6 hari?",
+                options: [
+                    "200 Orang",
+                    "400 Orang",
+                    "800 Orang",
+                    "1.600 Orang"
+                ],
+                correct: 2, // 50 * 2^3 = 50 * 8 = 400
+                correctMsg: "Benar! Untuk t = 6, pangkatnya menjadi 0.5(6) = 3. Maka f(6) = 50 × 2³ = 50 × 8 = 400 orang.",
+                explanation: "Model eksponen ini menunjukkan bahwa setiap 2 hari sekali, jumlah penderita terinfeksi berlipat ganda."
+            },
+            {
+                id: 2,
+                context: "Keuangan & Ekonomi",
+                question: "Pak Budi menyimpan uang modal sebesar Rp 10.000.000 di bank dengan suku bunga majemuk 10% per tahun. Rumus saldo Pak Budi setelah t tahun adalah $M(t) = 10.000.000 \cdot (1,1)^t$. Berapa besarnya tabungan Pak Budi pada akhir tahun ke-2?",
+                options: [
+                    "Rp 12.000.000",
+                    "Rp 12.100.000",
+                    "Rp 11.000.000",
+                    "Rp 13.310.000"
+                ],
+                correct: 1, // 10jt * 1.21 = 12.1jt
+                correctMsg: "Tepat Sekali! $M(2) = 10.000.000 \\times (1,1)^2 = 10.000.000 \\times 1,21 = 12.100.000$.",
+                explanation: "Bunga majemuk adalah contoh penerapan fungsi eksponen pertumbuhan di mana bunga periode sebelumnya dihitung kembali untuk bunga periode berikutnya."
+            },
+            {
+                id: 3,
+                context: "Kedokteran & Farmakologi",
+                question: "Seorang pasien menerima suntikan dosis obat 200 mg. Obat tersebut mengalami peluruhan dalam tubuh dengan sisa zat obat dinyatakan oleh $D(t) = 200 \cdot (0,5)^{t/3}$, dengan t dalam jam. Berapa sisa zat obat di dalam tubuh pasien setelah 9 jam?",
+                options: [
+                    "100 mg",
+                    "50 mg",
+                    "25 mg",
+                    "12,5 mg"
+                ],
+                correct: 2, // 200 * (0.5)^3 = 200 * 0.125 = 25
+                correctMsg: "Hebat! Untuk t = 9 jam, $t/3 = 3$. Maka $D(9) = 200 \\times (0,5)^3 = 200 \\times 0,125 = 25$ mg.",
+                explanation: "Waktu paruh (half-life) obat ini adalah 3 jam, artinya setiap 3 jam dosis obat berkurang menjadi separuhnya."
+            },
+            {
+                id: 4,
+                context: "Konsep & Asimtot Grafik",
+                question: "Diberikan grafik fungsi $f(x) = 3 \cdot 2^{x-1} - 6$. Manakah garis yang menjadi **Asimtot Datar** dari fungsi eksponen tersebut?",
+                options: [
+                    "y = 0",
+                    "y = 3",
+                    "y = -6",
+                    "x = -6"
+                ],
+                correct: 2,
+                correctMsg: "Benar! Nilai d = -6 menyatakan pergeseran vertikal, sehingga asimtot datarnya terletak pada garis y = -6.",
+                explanation: "Karena $2^{x-1}$ selalu bernilai positif mendekati 0 saat $x \\to -\\infty$, nilai $f(x)$ akan mendekati $-6$ tetapi tidak pernah menyentuhnya."
+            }
+        ];
+
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+        let answeredQuestions = {};
+
+        // Switch Active Tab
+        function switchTab(tabName) {
+            // Hide all contents
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            // Remove active style from buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('text-slate-600', 'hover:bg-slate-100');
+            });
+
+            // Show current tab
+            document.getElementById(`content-${tabName}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tabName}`);
+            activeBtn.classList.add('active');
+            activeBtn.classList.remove('text-slate-600', 'hover:bg-slate-100');
+
+            // Render/Resize MathJax
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+
+            // Update specific Tab charts if needed
+            if (tabName === 'konsep') updateGraph();
+            if (tabName === 'kontekstual') updateSimulation();
+            if (tabName === 'komparasi') updateComparison();
+        }
+
+        // Update Concept Chart (Tab 1)
+        function updateGraph() {
+            const a = parseFloat(document.getElementById('slider-a').value);
+            const b = parseFloat(document.getElementById('slider-b').value);
+            const c = parseFloat(document.getElementById('slider-c').value);
+            const d = parseFloat(document.getElementById('slider-d').value);
+
+            // Update Labels
+            document.getElementById('val-a').innerText = a;
+            document.getElementById('val-b').innerText = b;
+            document.getElementById('val-c').innerText = c;
+            document.getElementById('val-d').innerText = d;
+
+            // Update Badge Type
+            const badge = document.getElementById('b-type-badge');
+            if (b > 1) {
+                badge.innerText = "Pertumbuhan (b > 1)";
+                badge.className = "text-emerald-600 font-bold";
+            } else if (b < 1 && b > 0) {
+                badge.innerText = "Peluruhan (0 < b < 1)";
+                badge.className = "text-amber-600 font-bold";
+            } else {
+                badge.innerText = "Konstan (b = 1)";
+                badge.className = "text-slate-500 font-bold";
+            }
+
+            // Update LaTeX text
+            const eqText = `$f(x) = ${a} \\cdot (${b})^{x - (${c})} + (${d})$`;
+            document.getElementById('current-equation-display').innerHTML = eqText;
+            if (window.MathJax) MathJax.typesetPromise();
+
+            // Compute Points (-5 to 5)
+            const xValues = [];
+            const yValues = [];
+            const asymptoteValues = [];
+
+            for (let x = -5; x <= 5; x += 0.25) {
+                xValues.push(x.toFixed(2));
+                const y = a * Math.pow(b, x - c) + d;
+                yValues.push(y);
+                asymptoteValues.push(d);
+            }
+
+            // Initialize or Update Chart.js
+            const ctx = document.getElementById('conceptChart').getContext('2d');
+            if (conceptChartInstance) {
+                conceptChartInstance.destroy();
+            }
+
+            conceptChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: xValues,
+                    datasets: [
+                        {
+                            label: 'y = f(x)',
+                            data: yValues,
+                            borderColor: '#4f46e5',
+                            borderWidth: 3,
+                            fill: false,
+                            tension: 0.2,
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'Asimtot Datar (y = d)',
+                            data: asymptoteValues,
+                            borderColor: '#ef4444',
+                            borderWidth: 2,
+                            borderDash: [6, 6],
+                            fill: false,
+                            pointRadius: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Sumbu X' },
+                            grid: { color: '#e2e8f0' }
+                        },
+                        y: {
+                            title: { display: true, text: 'Sumbu Y' },
+                            min: Math.min(-10, d - 5),
+                            max: Math.max(10, d + 15),
+                            grid: { color: '#e2e8f0' }
+                        }
+                    },
+                    plugins: {
+                        tooltip: { mode: 'index', intersect: false }
+                    }
+                }
+            });
+        }
+
+        function resetGraphParams() {
+            document.getElementById('slider-a').value = 1;
+            document.getElementById('slider-b').value = 2;
+            document.getElementById('slider-c').value = 0;
+            document.getElementById('slider-d').value = 0;
+            updateGraph();
+        }
+
+        // Tab 2: Contextual Simulations Logic
+        function selectSimContext(type) {
+            currentSimType = type;
+            const container = document.getElementById('sim-inputs-container');
+            
+            // Highlight Buttons
+            ['virus', 'keuangan', 'obat'].forEach(t => {
+                const btn = document.getElementById(`btn-sim-${t}`);
+                if (t === type) {
+                    btn.classList.add('border-indigo-600', 'border-2');
+                    btn.classList.remove('border-slate-200');
+                } else {
+                    btn.classList.remove('border-indigo-600', 'border-2');
+                    btn.classList.add('border-slate-200');
+                }
+            });
+
+            if (type === 'virus') {
+                document.getElementById('sim-category-badge').innerText = "Skenario Biologi";
+                document.getElementById('sim-category-badge').className = "px-2.5 py-1 bg-rose-100 text-rose-700 text-xs font-bold rounded-full";
+                document.getElementById('sim-title').innerText = "Pertumbuhan Bakteri / Virus";
+                document.getElementById('sim-formula').innerHTML = "$N(t) = N_0 \\cdot (2)^{t / T}$";
+                document.getElementById('sim-explanation').innerText = "N_0 adalah populasi awal, t adalah waktu (jam), T adalah periode pembelahan sel.";
+                
+                container.innerHTML = `
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Populasi Awal ($N_0$): <span id="sim-v1" class="text-indigo-600">100</span> Bakteri</label>
+                        <input type="range" id="sim-s1" min="10" max="500" step="10" value="100" class="w-full custom-slider bg-slate-200 h-2 rounded-lg appearance-none" oninput="updateSimulation()">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Waktu Pembelahan ($T$): Setiap <span id="sim-v2" class="text-indigo-600">2</span> Jam</label>
+                        <input type="range" id="sim-s2" min="1" max="6" step="1" value="2" class="w-full custom-slider bg-slate-200 h-2 rounded-lg appearance-none" oninput="updateSimulation()">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Total Waktu Pengamatan ($t$): <span id="sim-v3" class="text-indigo-600">12</span> Jam</label>
+                        <input type="range" id="sim-s3" min="2" max="24" step="2" value="12" class="w-full custom-slider bg-slate-200 h-2 rounded-lg appearance-none" oninput="updateSimulation()">
+                    </div>
+                `;
+            } else if (type === 'keuangan') {
+                document.getElementById('sim-category-badge').innerText = "Skenario Keuangan";
+                document.getElementById('sim-category-badge').className = "px-2.5 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full";
+                document.getElementById('sim-title').innerText = "Pertumbuhan Bunga Majemuk";
+                document.getElementById('sim-formula').innerHTML = "$M(t) = M_0 \\cdot (1 + i)^t$";
+                document.getElementById('sim-explanation').innerText = "M_0 adalah modal deposito awal, i adalah persen bunga tahunan, t adalah waktu (tahun).";
+
+                container.innerHTML = `
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Modal Deposito ($M_0$): Rp <span id="sim-v1" class="text-indigo-600">5.000.000</span></label>
+                        <input type="range" id="sim-s1" min="1000000" max="20000000" step="1000000" value="5000000" class="w-full custom-slider bg-slate-200 h-2 rounded-lg appearance-none" oninput="updateSimulation()">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Suku Bunga Majemuk ($i$): <span id="sim-v2" class="text-indigo-600">8</span>% / thn</label>
+                        <input type="range" id="sim-s2" min="1" max="20" step="1" value="8" class="w-full custom-slider bg-slate-200 h-2 rounded-lg appearance-none" oninput="updateSimulation()">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Durasi Investasi ($t$): <span id="sim-v3" class="text-indigo-600">10</span> Tahun</label>
+                        <input type="range" id="sim-s3" min="1" max="20" step="1" value="10" class="w-full custom-slider bg-slate-200 h-2 rounded-lg appearance-none" oninput="updateSimulation()">
+                    </div>
+                `;
+            } else if (type === 'obat') {
+                document.getElementById('sim-category-badge').innerText = "Skenario Medis";
+                document.getElementById('sim-category-badge').className = "px-2.5 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full";
+                document.getElementById('sim-title').innerText = "Peluruhan Dosis Obat dalam Darah";
+                document.getElementById('sim-formula').innerHTML = "$D(t) = D_0 \\cdot (0,5)^{t / H}$";
+                document.getElementById('sim-explanation').innerText = "D_0 adalah dosis awal obat (mg), H adalah waktu paruh peluruhan obat (jam).";
+
+                container.innerHTML = `
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Dosis Suntikan Awal ($D_0$): <span id="sim-v1" class="text-indigo-600">400</span> mg</label>
+                        <input type="range" id="sim-s1" min="100" max="1000" step="50" value="400" class="w-full custom-slider bg-slate-200 h-2 rounded-lg appearance-none" oninput="updateSimulation()">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Waktu Paruh Obat ($H$): <span id="sim-v2" class="text-indigo-600">4</span> Jam</label>
+                        <input type="range" id="sim-s2" min="1" max="8" step="1" value="4" class="w-full custom-slider bg-slate-200 h-2 rounded-lg appearance-none" oninput="updateSimulation()">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Waktu Pengamatan ($t$): <span id="sim-v3" class="text-indigo-600">20</span> Jam</label>
+                        <input type="range" id="sim-s3" min="4" max="32" step="4" value="20" class="w-full custom-slider bg-slate-200 h-2 rounded-lg appearance-none" oninput="updateSimulation()">
+                    </div>
+                `;
+            }
+
+            if (window.MathJax) MathJax.typesetPromise();
+            updateSimulation();
+        }
+
+        function updateSimulation() {
+            const val1 = parseFloat(document.getElementById('sim-s1').value);
+            const val2 = parseFloat(document.getElementById('sim-s2').value);
+            const val3 = parseFloat(document.getElementById('sim-s3').value);
+
+            document.getElementById('sim-v1').innerText = val1.toLocaleString('id-ID');
+            document.getElementById('sim-v2').innerText = val2;
+            document.getElementById('sim-v3').innerText = val3;
+
+            const timePoints = [];
+            const resultData = [];
+
+            if (currentSimType === 'virus') {
+                for (let t = 0; t <= val3; t += 0.5) {
+                    timePoints.push(`${t} Jam`);
+                    const N = val1 * Math.pow(2, t / val2);
+                    resultData.push(Math.round(N));
+                }
+                const finalVal = val1 * Math.pow(2, val3 / val2);
+                document.getElementById('sim-result-value').innerText = `${Math.round(finalVal).toLocaleString('id-ID')} Bakteri`;
+            } else if (currentSimType === 'keuangan') {
+                for (let t = 0; t <= val3; t += 1) {
+                    timePoints.push(`Thn ${t}`);
+                    const M = val1 * Math.pow(1 + (val2 / 100), t);
+                    resultData.push(Math.round(M));
+                }
+                const finalVal = val1 * Math.pow(1 + (val2 / 100), val3);
+                document.getElementById('sim-result-value').innerText = `Rp ${Math.round(finalVal).toLocaleString('id-ID')}`;
+            } else if (currentSimType === 'obat') {
+                for (let t = 0; t <= val3; t += 1) {
+                    timePoints.push(`${t} Jam`);
+                    const D = val1 * Math.pow(0.5, t / val2);
+                    resultData.push(parseFloat(D.toFixed(2)));
+                }
+                const finalVal = val1 * Math.pow(0.5, val3 / val2);
+                document.getElementById('sim-result-value').innerText = `${finalVal.toFixed(2)} mg`;
+            }
+
+            // Render Chart
+            const ctx = document.getElementById('simChart').getContext('2d');
+            if (simChartInstance) simChartInstance.destroy();
+
+            const chartColor = currentSimType === 'virus' ? '#e11d48' : (currentSimType === 'keuangan' ? '#10b981' : '#2563eb');
+
+            simChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: timePoints,
+                    datasets: [{
+                        label: 'Nilai Perkembangan',
+                        data: resultData,
+                        borderColor: chartColor,
+                        backgroundColor: chartColor + '20',
+                        fill: true,
+                        borderWidth: 3,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { grid: { color: '#f1f5f9' } },
+                        y: { grid: { color: '#f1f5f9' } }
+                    }
+                }
+            });
+        }
+
+        // Tab 3: Linear vs Exponential Comparison Logic
+        function updateComparison() {
+            const m0 = parseFloat(document.getElementById('comp-m0').value);
+            const add = parseFloat(document.getElementById('comp-add').value);
+            const rate = parseFloat(document.getElementById('comp-rate').value) / 100;
+            const years = parseInt(document.getElementById('comp-years').value);
+
+            document.getElementById('comp-val-m0').innerText = m0.toLocaleString('id-ID');
+            document.getElementById('comp-val-add').innerText = add.toLocaleString('id-ID');
+            document.getElementById('comp-val-rate').innerText = (rate * 100).toFixed(0);
+            document.getElementById('comp-val-years').innerText = years;
+
+            const labels = [];
+            const linearData = [];
+            const expoData = [];
+
+            for (let t = 0; t <= years; t++) {
+                labels.push(`Tahun ${t}`);
+                // Linear: M_0 + t * add
+                const yLin = m0 + (t * add);
+                // Expo: M_0 * (1 + rate)^t
+                const yExp = m0 * Math.pow(1 + rate, t);
+
+                linearData.push(Math.round(yLin));
+                expoData.push(Math.round(yExp));
+            }
+
+            const finalLin = linearData[linearData.length - 1];
+            const finalExp = expoData[expoData.length - 1];
+            const diff = finalExp - finalLin;
+
+            document.getElementById('res-linear').innerText = `Rp ${finalLin.toLocaleString('id-ID')}`;
+            document.getElementById('res-expo').innerText = `Rp ${finalExp.toLocaleString('id-ID')}`;
+            document.getElementById('res-diff').innerText = `Rp ${diff.toLocaleString('id-ID')}`;
+
+            // Render Chart
+            const ctx = document.getElementById('compChart').getContext('2d');
+            if (compChartInstance) compChartInstance.destroy();
+
+            compChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Pertumbuhan Linear (Penjumlahan Tetap)',
+                            data: linearData,
+                            borderColor: '#2563eb',
+                            borderWidth: 3,
+                            fill: false
+                        },
+                        {
+                            label: 'Pertumbuhan Eksponensial (Bunga Berlipat)',
+                            data: expoData,
+                            borderColor: '#059669',
+                            borderWidth: 3,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { grid: { color: '#f1f5f9' } },
+                        y: { grid: { color: '#f1f5f9' } }
+                    }
+                }
+            });
+        }
+
+        // Tab 4: Quiz Logic
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            const q = quizQuestions[currentQuizIndex];
+            const isAnswered = answeredQuestions.hasOwnProperty(q.id);
+            const selectedOpt = answeredQuestions[q.id];
+
+            document.getElementById('quiz-progress').innerText = `Soal ${currentQuizIndex + 1} / ${quizQuestions.length}`;
+
+            let html = `
+                <div class="space-y-4">
+                    <div class="flex items-center gap-2">
+                        <span class="px-2.5 py-1 bg-indigo-100 text-indigo-700 text-xs font-bold rounded-full">${q.context}</span>
+                    </div>
+
+                    <p class="text-base font-bold text-slate-800 leading-relaxed">${q.question}</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
+            `;
+
+            q.options.forEach((opt, idx) => {
+                let btnStyle = "border-slate-200 hover:border-indigo-500 hover:bg-indigo-50/50 text-slate-700";
+                let badgeIcon = "";
+
+                if (isAnswered) {
+                    if (idx === q.correct) {
+                        btnStyle = "border-emerald-500 bg-emerald-50 text-emerald-900 font-bold";
+                        badgeIcon = '<i class="fa-solid fa-circle-check text-emerald-600 ml-auto"></i>';
+                    } else if (idx === selectedOpt) {
+                        btnStyle = "border-rose-500 bg-rose-50 text-rose-900 font-bold";
+                        badgeIcon = '<i class="fa-solid fa-circle-xmark text-rose-600 ml-auto"></i>';
+                    } else {
+                        btnStyle = "border-slate-200 opacity-50 text-slate-500";
+                    }
+                }
+
+                html += `
+                    <button onclick="submitAnswer(${q.id}, ${idx})" ${isAnswered ? 'disabled' : ''} class="w-full p-4 border-2 rounded-xl text-left text-sm transition-all flex items-center justify-between ${btnStyle}">
+                        <span><strong>${String.fromCharCode(65 + idx)}.</strong> ${opt}</span>
+                        ${badgeIcon}
+                    </button>
+                `;
+            });
+
+            html += `</div>`;
+
+            // Display Feedback Explanation if answered
+            if (isAnswered) {
+                const isCorrect = selectedOpt === q.correct;
+                html += `
+                    <div class="p-4 rounded-xl text-xs space-y-2 border ${isCorrect ? 'bg-emerald-50 border-emerald-200 text-emerald-900' : 'bg-rose-50 border-rose-200 text-rose-900'}">
+                        <p class="font-bold flex items-center gap-1.5">
+                            <i class="fa-solid ${isCorrect ? 'fa-circle-check' : 'fa-circle-exclamation'}"></i>
+                            ${isCorrect ? 'Jawaban Benar!' : 'Jawaban Belum Tepat!'}
+                        </p>
+                        <p>${q.correctMsg}</p>
+                        <p class="pt-1 border-t border-slate-200 text-slate-600 font-medium">${q.explanation}</p>
+                    </div>
+                `;
+            }
+
+            // Quiz Navigation Buttons
+            html += `
+                <div class="flex justify-between items-center pt-4 border-t border-slate-100">
+                    <button onclick="prevQuestion()" ${currentQuizIndex === 0 ? 'disabled' : ''} class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl disabled:opacity-40">
+                        <i class="fa-solid fa-arrow-left mr-1"></i> Sebelum
+                    </button>
+                    <button onclick="nextQuestion()" ${currentQuizIndex === quizQuestions.length - 1 ? 'disabled' : ''} class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl disabled:opacity-40">
+                        Berikut <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            `;
+
+            container.innerHTML = html;
+            if (window.MathJax) MathJax.typesetPromise();
+        }
+
+        function submitAnswer(qId, optIdx) {
+            answeredQuestions[qId] = optIdx;
+            const q = quizQuestions.find(item => item.id === qId);
+            if (optIdx === q.correct) {
+                quizScore += 25; // 4 questions = 100 max
+                document.getElementById('quiz-score').innerText = quizScore;
+            }
+            renderQuiz();
+        }
+
+        function prevQuestion() {
+            if (currentQuizIndex > 0) {
+                currentQuizIndex--;
+                renderQuiz();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuizIndex < quizQuestions.length - 1) {
+                currentQuizIndex++;
+                renderQuiz();
+            }
+        }
+
+        // Tab 5: Save Reflection Notes
+        function saveReflectionNotes() {
+            const q1 = document.getElementById('ref-q1').value.trim();
+            const q2 = document.getElementById('ref-q2').value.trim();
+            const q3 = document.getElementById('ref-q3').value.trim();
+
+            const fullText = `=== JURNAL REFLEKSI DEEP LEARNING: FUNGSI EKSPONEN ===\n\n1. Beda Linear vs Eksponensial:\n${q1 || '-'}\n\n2. Contoh Fenomena Eksponen Nyata:\n${q2 || '-'}\n\n3. Pengaruh Nilai Basis (b):\n${q3 || '-'}\n\nSkor Kuis Evaluasi: ${quizScore}/100`;
+
+            // Copy to clipboard safely
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = fullText;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+
+            const msg = document.getElementById('save-status-msg');
+            msg.classList.remove('hidden');
+            setTimeout(() => msg.classList.add('hidden'), 3000);
+        }
+
+        // Initialize App on Load
+        window.onload = function() {
+            updateGraph();
+            selectSimContext('virus');
+            updateComparison();
+            renderQuiz();
+        };
+    </script>
+</body>
+</html>
